@@ -1,5 +1,4 @@
 .yarn
 node_modules
 .vscode
-/dist
 /build
