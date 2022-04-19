@@ -1,11 +1,14 @@
 pipeline {
     agent any
+    tools{
+        node "node1610"
+    }
 
     stages {
         stage('Hello') {
             steps {
                 echo 'Hello World'
-                sh 'ls'
+                sh 'npm'
             }
         }
     }
