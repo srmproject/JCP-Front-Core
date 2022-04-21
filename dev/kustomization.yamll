@@ -1,0 +1,7 @@
+bases:
+- ../base
+namePrefix: dev-
+images:
+- name: nginx
+  newName: image
+  newTag: tag
