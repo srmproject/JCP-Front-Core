@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: core
-        image: <image>
+        image: core-image
         resources:
           limits:
             memory: "128Mi"
