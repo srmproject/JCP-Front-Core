@@ -2,6 +2,6 @@ bases:
 - ../base
 namePrefix: dev-
 images:
-- name: nginx
+- name: core
   newName: image
   newTag: tag
