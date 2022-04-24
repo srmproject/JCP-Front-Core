@@ -4,5 +4,5 @@ namePrefix: dev-
 
 images:
 - name: core-image
-  newName: nginx
-  newTag: latest
+  newName: null
+  newTag: null    
