@@ -4,5 +4,5 @@ namePrefix: dev-
 
 images:
 - name: core-image
-  newName: core
+  newName: 192.168.0.66:31831/core
   newTag: dev0.2    
