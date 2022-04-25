@@ -79,7 +79,7 @@ pipeline {
                             git commit -m 'change image:tag'
 
                             git remote -v
-                            git remote remove target git@github.com:srmproject/JCP-Front-Core.git
+                            git remote remove target
                             
                         """
                     }
