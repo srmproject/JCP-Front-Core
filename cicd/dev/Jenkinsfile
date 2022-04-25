@@ -79,8 +79,9 @@ pipeline {
                             git commit -m 'change image:tag'
 
                             git remote -v
+                            git remote add target git@github.com:srmproject/JCP-Front-Core.git
+                            GIT_SSH_COMMAND="ssh -i $SSH_KEY" git push target cicd
                             git remote remove target
-                            
                         """
                     }
                 }
