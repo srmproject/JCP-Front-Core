@@ -64,7 +64,7 @@ pipeline {
                     
                     images:
                     - name: core-image
-                      newName: ${docker_image_name}
+                      newName: ${REGISTRY}/${docker_image_name}
                       newTag: ${tag}    
                     EOF
                     """.stripIndent()
