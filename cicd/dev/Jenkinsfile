@@ -7,12 +7,7 @@ pipeline {
         MODE = "dev"
     }
 
-    stages {
-        stage('git clone') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/choisungwook/JCP-Front-Core-test.git']]])
-            }
-        }
+    stages {        
         stage('pre build') {
             steps {
                 sh "rm -rf ././Dockerfile"
