@@ -50,7 +50,7 @@ pipeline {
         }
         stage('checkout cicd branch') {
             steps {
-                git branch: 'cicd', url: 'https://github.com/choisungwook/JCP-Front-Core-test.git'
+                git branch: 'cicd', url: 'https://github.com/srmproject/JCP-Front-Core.git'
             }
         }
         stage('change image:tag') {
@@ -77,7 +77,6 @@ pipeline {
                             git config --local user.email "myjenkins@admin.com"
                             git config --local user.name "jenkins"
                             git remote set-url target git@github.com:srmproject/JCP-Front-Core.git
-                            git remote -v
                             GIT_SSH_COMMAND="ssh -i $SSH_KEY" git push target cicd                            
                         """
                     }
