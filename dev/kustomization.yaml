@@ -1,0 +1,8 @@
+bases:
+- ../base
+namePrefix: dev-
+
+images:
+- name: core-image
+  newName: test
+  newTag: dev0.1    
