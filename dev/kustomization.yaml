@@ -5,4 +5,4 @@ namePrefix: dev-
 images:
 - name: core-image
   newName: core
-  newTag: dev0.1    
+  newTag: dev0.2    
