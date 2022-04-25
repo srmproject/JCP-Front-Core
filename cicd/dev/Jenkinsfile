@@ -77,8 +77,9 @@ pipeline {
                             git config --local user.email "myjenkins@admin.com"
                             git config --local user.name "jenkins"
                             git commit -m 'change image:tag'
-                            
+
                             git remote set-url target git@github.com:srmproject/JCP-Front-Core.git
+                            git remote -v
                             GIT_SSH_COMMAND="ssh -i $SSH_KEY" git push target cicd                            
                         """
                     }
