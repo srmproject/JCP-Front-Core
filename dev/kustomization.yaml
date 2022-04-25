@@ -4,5 +4,5 @@ namePrefix: dev-
 
 images:
 - name: core-image
-  newName: test
+  newName: core
   newTag: dev0.1    
