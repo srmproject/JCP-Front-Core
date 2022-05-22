@@ -17,7 +17,7 @@ images:
 patches:
   - target:
       kind: Ingress
-      name: dev-frontend-core
+      name: frontend-core
     patch: |-
       - op: replace
         path: /spec/rules/0/host
