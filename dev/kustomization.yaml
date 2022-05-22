@@ -15,10 +15,10 @@ images:
     newTag: dev0.7
 
 patches:
-    - target:
-        kind: Ingress
-        name: my-ingress
-      patch: |-
-        - op: replace
-          path: /spec/rules/0/host
-          value: dev-core.choilab.xyz
+  - target:
+      kind: Ingress
+      name: dev-frontend-core
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: dev-core.choilab.xyz
