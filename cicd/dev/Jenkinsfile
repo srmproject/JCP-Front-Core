@@ -59,13 +59,29 @@ pipeline {
                     sh """
                     cat <<EOF > kustomization.yaml
                     bases:
-                    - ../base
+                      - ../base
+
                     namePrefix: dev-
+
+                    configurations:
+                      - nameReference.yaml
+
+                    commonLabels:
+                      app: dev-frontend-core
                     
                     images:
-                    - name: core-image
-                      newName: ${REGISTRY}/${docker_image_name}
-                      newTag: ${tag}    
+                      - name: core-image
+                        newName: ${REGISTRY}/${docker_image_name}
+                        newTag: ${tag}
+
+                    patches:
+                        - target:
+                            kind: Ingress
+                            name: my-ingress
+                            patch: |-
+                            - op: replace
+                                path: /spec/rules/0/host
+                                value: dev-core.choilab.xyz
                     EOF
                     """.stripIndent()
                     
