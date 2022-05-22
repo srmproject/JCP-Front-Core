@@ -12,7 +12,7 @@ commonLabels:
 images:
   - name: core-image
     newName: 192.168.0.66:31831/core
-    newTag: dev0.9
+    newTag: dev1.0
 
 patches:
   - target:
