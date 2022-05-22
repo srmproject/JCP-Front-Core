@@ -3,5 +3,3 @@ resources:
 - service.yaml
 - ingress.yaml
 namespace: jcp
-commonLabels:
-  app: frontend
