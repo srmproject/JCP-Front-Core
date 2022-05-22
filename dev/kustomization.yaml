@@ -18,7 +18,7 @@ patches:
     - target:
         kind: Ingress
         name: my-ingress
-        patch: |-
+      patch: |-
         - op: replace
-            path: /spec/rules/0/host
-            value: dev-core.choilab.xyz
+          path: /spec/rules/0/host
+          value: dev-core.choilab.xyz
