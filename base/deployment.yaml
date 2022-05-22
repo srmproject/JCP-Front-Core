@@ -5,6 +5,7 @@ metadata:
   labels:
     app: frontend-core
 spec:
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: frontend-core
