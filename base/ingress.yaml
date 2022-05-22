@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: frontend-core
 spec:
+  ingressClassName: nginx
   rules:
   - host: core.choilab.xyz
     http:
