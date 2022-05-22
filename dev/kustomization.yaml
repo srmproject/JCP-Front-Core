@@ -1,8 +1,24 @@
 bases:
-- ../base
+  - ../base
+
 namePrefix: dev-
 
+configurations:
+  - nameReference.yaml
+
+commonLabels:
+  app: dev-frontend-core
+
 images:
-- name: core-image
-  newName: 192.168.0.66:31831/core
-  newTag: dev0.7    
+  - name: core-image
+    newName: 192.168.0.66:31831/core
+    newTag: dev0.7
+
+patches:
+    - target:
+        kind: Ingress
+        name: my-ingress
+        patch: |-
+        - op: replace
+            path: /spec/rules/0/host
+            value: dev-core.choilab.xyz
