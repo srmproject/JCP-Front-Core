@@ -11,4 +11,4 @@ spec:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Recycle
   hostPath:
-    path: /mnt/k8s-data/dev/jcp/frontend-core
+    path: /mnt/data/dev/jcp/frontend-core/micro
