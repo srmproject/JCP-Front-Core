@@ -21,5 +21,5 @@ commonLabels:
 images:
   - name: core-image
     newName: 192.168.0.66:31831/core
-    newTag: dev1.9
+    newTag: dev2.0
 
