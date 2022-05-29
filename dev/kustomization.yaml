@@ -12,12 +12,12 @@ commonLabels:
 images:
   - name: core-image
     newName: 192.168.0.66:31831/core
-    newTag: dev1.0
+    newTag: dev1.1
 
 patches:
   - target:
       kind: Ingress
-      name: frontend-core
+      name: dev-frontend-core
     patch: |-
       - op: replace
         path: /spec/rules/0/host
