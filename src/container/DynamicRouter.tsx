@@ -35,10 +35,9 @@ const DynamicRouter = () => {
     console.log(response, 'axios ㅌ에스트');
     if (!response.hasOwnProperty('data')) return;
     const assets = response.data;
-
     const promiseAll: any = [];
     const { id } = assets;
-    const jsFile = rootUrl + id + assets.files[id + '.js'];
+    const jsFile = rootUrl + '/' + id + assets.files[id + '.js'];
 
     let importedScript = document.querySelector(`script[data-dynamic-component-id="${id}"]`);
 
