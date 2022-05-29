@@ -1,15 +1,6 @@
 bases:
   - ../base
 
-patches:
-  - target:
-      kind: Ingress
-      name: frontend-core
-    patch: |-
-      - op: replace
-        path: /spec/rules/0/host
-        value: dev-core.choilab.xyz
-
 namePrefix: dev-
 
 configurations:
@@ -21,4 +12,13 @@ commonLabels:
 images:
   - name: core-image
     newName: 192.168.0.66:31831/core
-    newTag: dev1.1
+    newTag: dev1.2
+
+patches:
+  - target:
+      kind: Ingress
+      name: dev-frontend-core
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: dev-core.choilab.xyz
