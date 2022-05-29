@@ -7,21 +7,21 @@ pipeline {
         MODE = "dev"
     }
 
-    stages {        
+    stages {
         stage('pre build') {
             steps {
                 sh "rm -rf ././Dockerfile"
                 sh "rm -rf ././nginx.conf"
                 sh "cp ./cicd/dev/Dockerfile ./Dockerfile"
                 sh "cp ./cicd/dev/nginx.conf ./nginx.conf"
-                script {                    
+                script {
                     tag = sh(script: "git tag -l | tail -1 | tr -d \'\\n\'", returnStdout: true)
-                    docker_image_name = sh(script: "echo ${env.JOB_BASE_NAME} | tr -d \'\\n\'", returnStdout: true)                     
-                }                
+                    docker_image_name = sh(script: "echo ${env.JOB_BASE_NAME} | tr -d \'\\n\'", returnStdout: true)
+                }
             }
         }
         stage('print prebuild') {
-            steps {                                
+            steps {
                 echo "dockerimage:tag ${docker_image_name}:${tag}"
             }
         }
@@ -45,7 +45,7 @@ pipeline {
                             sh(script: "docker rmi ${REGISTRY}/${docker_image_name}:${tag}", returnStdout: true)
                         }
                     }
-                }   
+                }
             }
         }
         stage('checkout cicd branch') {
@@ -64,12 +64,12 @@ pipeline {
                     patches:
                       - target:
                           kind: Ingress
-                          name: dev-frontend-core
+                          name: frontend-core
                         patch: |-
                           - op: replace
                             path: /spec/rules/0/host
                             value: dev-core.choilab.xyz
-                            
+
                     namePrefix: dev-
 
                     configurations:
@@ -77,7 +77,7 @@ pipeline {
 
                     commonLabels:
                       app: dev-frontend-core
-                    
+
                     images:
                       - name: core-image
                         newName: ${REGISTRY}/${docker_image_name}
@@ -85,7 +85,7 @@ pipeline {
 
                     EOF
                     """.stripIndent()
-                    
+
                     withCredentials([sshUserPrivateKey(credentialsId: "JCP-FRONTEND-CORE-SSHKEY", keyFileVariable: "SSH_KEY")]) {
                         sh """
                             mkdir -p ~/.ssh
