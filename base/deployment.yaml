@@ -12,6 +12,12 @@ spec:
       labels:
         app: frontend-core
     spec:
+      nodeSelector:
+        role: infra
+      volumes:
+        - name: micro
+          persistentVolumeClaim:
+            claimName: frontend-core
       containers:
       - name: core
         image: core-image
@@ -21,3 +27,6 @@ spec:
             cpu: "0.1"
         ports:
         - containerPort: 80
+        volumeMounts:
+          - name: micro
+            mountPath: /app/jcp-application
