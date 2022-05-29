@@ -61,6 +61,15 @@ pipeline {
                     bases:
                       - ../base
 
+                    patches:
+                      - target:
+                          kind: Ingress
+                          name: dev-frontend-core
+                        patch: |-
+                          - op: replace
+                            path: /spec/rules/0/host
+                            value: dev-core.choilab.xyz
+                            
                     namePrefix: dev-
 
                     configurations:
@@ -74,14 +83,6 @@ pipeline {
                         newName: ${REGISTRY}/${docker_image_name}
                         newTag: ${tag}
 
-                    patches:
-                      - target:
-                          kind: Ingress
-                          name: dev-frontend-core
-                        patch: |-
-                          - op: replace
-                            path: /spec/rules/0/host
-                            value: dev-core.choilab.xyz
                     EOF
                     """.stripIndent()
                     
