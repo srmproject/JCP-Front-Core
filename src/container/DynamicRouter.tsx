@@ -28,8 +28,8 @@ const DynamicRouter = () => {
     });
   };
   const importComponent = async () => {
-    const rootUrl = `/media/micro/jcp-application/`;
-    const assetName = `app-${appName}/asset-manifest.json`;
+    const rootUrl = `/media/micro/jcp-application`;
+    const assetName = `/app-${appName}/asset-manifest.json`;
     const assetUrl = rootUrl + assetName;
     const response: any = await getAssets(assetUrl);
     console.log(response, 'axios ㅌ에스트');
