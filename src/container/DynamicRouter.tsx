@@ -38,7 +38,7 @@ const DynamicRouter = () => {
 
     const promiseAll: any = [];
     const { id } = assets;
-    const jsFile = rootUrl + assets.files[id + '.js'];
+    const jsFile = rootUrl + id + assets.files[id + '.js'];
 
     let importedScript = document.querySelector(`script[data-dynamic-component-id="${id}"]`);
 
