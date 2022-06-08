@@ -2,6 +2,8 @@ import React, { FC } from 'react';
 import { MenuOutlined, CaretDownOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { coreHeaderProperty } from 'types/modules';
+import AtomProfile from 'components/atoms/AtomProfile';
+
 import AtomHeader from 'components/atoms/AtomHeader';
 import AtomH2 from 'components/atoms/AtomH2';
 import AtomH4 from 'components/atoms/AtomH4';
@@ -26,6 +28,10 @@ const CoreHeaderStyled = styled.div`
       margin-left: 30px;
       cursor: pointer;
     }
+    .projectProfile {
+      margin-left: auto;
+      color: white;
+    }
   }
 `;
 const ModuleCoreHeader: FC<coreHeaderProperty> = ({ onClickTitle, onClickProject }) => {
@@ -42,6 +48,9 @@ const ModuleCoreHeader: FC<coreHeaderProperty> = ({ onClickTitle, onClickProject
           <CaretDownOutlined></CaretDownOutlined>
           <AtomSpan className="projectLabel">프로젝트 선택</AtomSpan>
         </AtomH4>
+        <AtomDiv className="projectProfile">
+          <AtomProfile />
+        </AtomDiv>
       </AtomHeader>
     </CoreHeaderStyled>
   );

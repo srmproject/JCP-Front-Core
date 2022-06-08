@@ -51,6 +51,14 @@ module.exports = {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
+      {
+        test: /\.(png|jpg|gif|svg|webp)/, // webpack5버전부터 file-loader url-loader 가 없어지고 asset modules로바뀌었음
+        type: 'asset/resource',
+        generator: {
+          //generator를 설정하여 build 완료시 images폴더에 넣는다
+          filename: 'images/[hash][ext][query]', // output.assetModuleFilename 설정을 이용하여 전체 rule을 정할수도있음
+        },
+      },
     ],
   },
   mode: 'development',
