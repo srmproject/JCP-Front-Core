@@ -5,9 +5,18 @@ pipeline {
     }
     environment {
         MODE = "dev"
+        WEBHOOK_URL = credentials("DISCORD_WEBHOOK")
     }
 
     stages {
+        stage('alarm') {
+            steps {
+                discordSend description: "job이름: ${env.JOB_BASE_NAME}",
+                            link: env.BUILD_URL, result: currentBuild.currentResult,
+                            title: "젠킨스 잡이 실행되었습니다.",
+                            webhookURL: env.WEBHOOK_URL
+            }
+        }
         stage('pre build') {
             steps {
                 sh "rm -rf ././Dockerfile"
@@ -15,7 +24,7 @@ pipeline {
                 sh "cp ./cicd/dev/Dockerfile ./Dockerfile"
                 sh "cp ./cicd/dev/nginx.conf ./nginx.conf"
                 script {
-                    tag = sh(script: "git tag -l | tail -1 | tr -d \'\\n\'", returnStdout: true)
+                    tag = sh(script: "echo ${env.BUILD_NUMBER} | tr -d \'\\n\'", returnStdout: true)
                     docker_image_name = sh(script: "echo ${env.JOB_BASE_NAME} | tr -d \'\\n\'", returnStdout: true)
                 }
             }
@@ -57,34 +66,9 @@ pipeline {
             steps {
                 dir("dev") {
                     sh """
-                    cat <<EOF > kustomization.yaml
-                    bases:
-                      - ../base
-
-                    patches:
-                      - target:
-                          kind: Ingress
-                          name: frontend-core
-                        patch: |-
-                          - op: replace
-                            path: /spec/rules/0/host
-                            value: dev-core.choilab.xyz
-
-                    namePrefix: dev-
-
-                    configurations:
-                      - nameReference.yaml
-
-                    commonLabels:
-                      app: dev-frontend-core
-
-                    images:
-                      - name: core-image
-                        newName: ${REGISTRY}/${docker_image_name}
-                        newTag: ${tag}
-
-                    EOF
-                    """.stripIndent()
+                        tmp_image_name="${REGISTRY}/${docker_image_name}" yq -i '.images[0].newName = env(tmp_image_name)' kustomization.yaml
+                        tmp_image_tag="${tag}" yq -i '.images[0].newTag = strenv(tmp_image_tag)' kustomization.yaml
+                    """
 
                     withCredentials([sshUserPrivateKey(credentialsId: "JCP-FRONTEND-CORE-SSHKEY", keyFileVariable: "SSH_KEY")]) {
                         sh """
@@ -92,9 +76,9 @@ pipeline {
                             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
                             git add kustomization.yaml
 
-                            git config --local user.email "myjenkins@admin.com"
-                            git config --local user.name "jenkins"
-                            git commit -m 'change image:tag'
+                            git config --local user.email "jenkins_bot@jcp.com"
+                            git config --local user.name "jenkins_bot"
+                            git commit --allow-empty -m 'change image:tag'
 
                             git remote -v
                             git remote add target git@github.com:srmproject/JCP-Front-Core.git
@@ -104,6 +88,20 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    post {
+        success {
+            discordSend description: "job이름: ${env.JOB_BASE_NAME}",
+                        link: env.BUILD_URL, result: currentBuild.currentResult,
+                        title: "job이 성공했습니다.",
+                        webhookURL: env.WEBHOOK_URL
+        }
+        failure {
+            discordSend description: "job이름: ${env.JOB_BASE_NAME}",
+                        link: env.BUILD_URL, result: currentBuild.currentResult,
+                        title: "job이 실패했습니다.",
+                        webhookURL: env.WEBHOOK_URL
         }
     }
 }
