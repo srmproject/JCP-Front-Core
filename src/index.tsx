@@ -5,8 +5,8 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import rootReducer from './rootReducer';
-import rootSaga from './rootSaga';
+import rootReducer from './slices';
+import rootSaga from './sagas';
 import 'antd/dist/antd.css';
 import './Global.css';
 

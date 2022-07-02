@@ -1,21 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import Axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-const DynamicRouter = () => {
+const DynamicRouter: FC = () => {
   const { appName } = useParams();
-  const [DynamicDom, setDynamicDom] = useState();
+  const [DynamicDom, setDynamicDom] = useState(undefined);
+
   const getAssets = async (assetUri: string) => {
     try {
+      // asset을 캐싱하지않기위해 timestap를 쿼리스트링에 넣어서 호출
       return await Axios.get(`${assetUri}?timestamp=${new Date().getTime()}`);
     } catch (error) {
       console.log(error);
     }
   };
-  const loadScript = async (jsFile: any, id: any) => {
+
+  interface iScriptPrameter {
+    fileUrl: string;
+    id: string;
+  }
+
+  const loadScript = async ({ fileUrl, id }: iScriptPrameter) => {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.setAttribute('src', jsFile);
+      script.setAttribute('src', fileUrl);
       script.setAttribute('data-dynamic-component-id', id);
       script.setAttribute('crossorigin', '');
       script.onload = () => {
@@ -37,12 +45,12 @@ const DynamicRouter = () => {
     const assets = response.data;
     const promiseAll: any = [];
     const { id } = assets;
-    const jsFile = rootUrl + '/' + id + assets.files[id + '.js'];
+    const fileUrl = rootUrl + '/' + id + assets.files[id + '.js'];
 
     let importedScript = document.querySelector(`script[data-dynamic-component-id="${id}"]`);
 
     if (importedScript == null) {
-      promiseAll.push(await loadScript(jsFile, id));
+      promiseAll.push(await loadScript({ id, fileUrl }));
     }
     try {
       const res = await Promise.all(promiseAll);
@@ -71,15 +79,13 @@ const DynamicRouter = () => {
     return (
       <>
         <div>DynamicRouter ::: {appName}</div>
-        <DynamicDom.App />
+        <DynamicDom.App appBasePath={`apps/${appName ?? 'application'}`} />
       </>
     );
   }
   return (
     <>
       <div>DynamicRouter ::: {appName}</div>
-
-      {/* {DynamicDom} */}
     </>
   );
 };
