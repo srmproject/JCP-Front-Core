@@ -20,7 +20,7 @@ const DynamicRouter: FC = () => {
     id: string;
   }
 
-  const loadScript = async ({ fileUrl, id }:iScriptPrameter) => {
+  const loadScript = async ({ fileUrl, id }: iScriptPrameter) => {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.setAttribute('src', fileUrl);
@@ -79,7 +79,7 @@ const DynamicRouter: FC = () => {
     return (
       <>
         <div>DynamicRouter ::: {appName}</div>
-        <DynamicDom.App />
+        <DynamicDom.App appBasePath={`apps/${appName ?? 'application'}`} />
       </>
     );
   }
