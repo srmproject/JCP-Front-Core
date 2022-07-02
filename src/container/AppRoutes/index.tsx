@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import TemplateSample from 'components/templates/TemplateSample';
-import DynamicRouter from './DynamicRouter';
+import DynamicRouter from 'container/DynamicRouter';
 const AppRoutes = () => {
   return (
     <Routes>
