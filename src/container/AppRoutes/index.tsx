@@ -6,8 +6,10 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/sample" element={<TemplateSample />} />
-      <Route path="/apps/:appName" element={<DynamicRouter />} />
-      <Route path="*" element={<div>홈화면?</div>} />
+      <Route path="apps">
+        <Route path=":appName/*" element={<DynamicRouter />}></Route>
+      </Route>
+      <Route path="*" element={<div>코어홈?</div>} />
     </Routes>
   );
 };
